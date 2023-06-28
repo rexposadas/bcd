@@ -1,0 +1,2 @@
+# bcd
+practicing go 
