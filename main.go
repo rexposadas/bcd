@@ -3,8 +3,9 @@ package main
 import "fmt"
 
 // todo: be able to add the numbers in the list
-func add(x, y int) int {
-	return x + y
+func add([]int) int {
+	sum := 0
+	for _, num := range numbers
 }
 
 // todo: concatenate the strings in the list
