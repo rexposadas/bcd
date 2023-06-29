@@ -10,3 +10,10 @@ func Concat(strings []string) string {
 	}
 	return concatenated
 }
+func Add(list []int) int {
+	sum := 0
+	for _, number := range list {
+		sum += number
+	}
+	return sum
+}
