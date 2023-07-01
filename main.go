@@ -2,25 +2,26 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/rexposadas/bcd/utils"
 )
 
-// todo: be able to add the numbers in the list
-func add(x, y int) int {
+func Add(x, y int) int {
 	return x + y
 }
 
-// todo: concatenate the strings in the list
 func concat(list []string) {
-
+	m := utils.M{}
+	concatenated := m.Concat(list)
+	fmt.Println(concatenated)
 }
 
 func main() {
 	numberList := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	a := utils.Add(numberList)
+	m := utils.M{}
+	a := m.Add(numberList)
 	fmt.Println("sum is", a, ".")
 
 	stringList := []string{"hello", "world", "this", "is", "a", "list", "of", "strings"}
-	concatenate := utils.Concat(stringList)
-	fmt.Println(concatenate)
+	concat(stringList)
 }
