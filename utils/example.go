@@ -3,7 +3,7 @@ package utils
 type M struct {
 }
 
-func (m M) Concat(strings []string) string {
+func Concat(strings []string) string {
 	concatenated := ""
 	for a, str := range strings {
 		concatenated += str
@@ -14,7 +14,7 @@ func (m M) Concat(strings []string) string {
 	return concatenated
 }
 
-func (m M) Add(list []int) int {
+func Add(list []int) int {
 	sum := 0
 	for _, number := range list {
 		sum += number
