@@ -23,4 +23,10 @@ func TestSub(t *testing.T) {
 	assert.Equal(t, 2, result)
 }
 
+func TestConcat(t *testing.T){
+
+	m := M{}
+	result := m.Concat([]string {"hello", "world"})
+	assert.Equal(t, "hello world", result)
+}
 // todo: add test for Concat
