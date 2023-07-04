@@ -17,6 +17,10 @@ func TestAdd(t *testing.T) {
 
 }
 
-// todo: add test for Concat
+func TestSub(t *testing.T) {
+	m := M{}
+	result := m.Sub(3, 1)
+	assert.Equal(t, 2, result)
+}
 
-// todo: add a test for Sub
+// todo: add test for Concat
