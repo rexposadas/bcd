@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,17 +28,12 @@ func main() {
 		})
 	})
 
-	// Example JSON payload would be :
-	//{
-	//	"data": ["hello", "world"]
-	//}
 	r.POST("/concat", func(c *gin.Context) {
-
 		req := c.Request
 
 		b, err := io.ReadAll(req.Body)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 		payload := struct {
@@ -47,7 +41,7 @@ func main() {
 		}{}
 
 		if err := json.Unmarshal(b, &payload); err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
@@ -58,10 +52,29 @@ func main() {
 			"result": result,
 		})
 	})
+ 
+	r.POST("/add", func(c *gin.Context) {
+		req := c.Request
+		b, err := io.ReadAll(req.Body)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+	}
+	payload := struct {
+		Data []int `json:"data"`
+	}{}
+	if err := json.Unmarshal(b, &payload); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+}
+	m := utils.M{}
+	result := m.Add(payload.Data)
 
-	// todo: create an endpoint with path "/add" similar to the one above, but making use
-	// of the M.Add() method
+	c.JSON(http.StatusOK, gin.H{
+		"result": result,
+	})
+})
 
-	r.Run(fmt.Sprintf(":%s", port))
+r.Run(fmt.Sprintf(":%s", port))
 
 }
