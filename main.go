@@ -3,12 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/rexposadas/bcd/utils"
 	"io"
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/rexposadas/bcd/utils"
 )
 
 func main() {
@@ -24,7 +25,40 @@ func main() {
 
 	// todo: add an endpoint for sub.
 
+	r.POST("/sub", func(c *gin.Context) {
+		req := c.Request
+		b, err := io.ReadAll(req.Body)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		payload := struct {
+			X int `json:"x"`
+			Y int `json:"y"`
+		}{}
+		if err := json.Unmarshal(b, &payload); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		m := utils.M{}
+		result := m.Sub(payload.X, payload.Y)
+
+		c.JSON(http.StatusOK, gin.H{
+			"result": result,
+		})
+	})
+
 	// todo: create an endpont for Dupes method.
+
+	r.POST("/dupes", func(c *gin.Context) {
+		numberList := []int{1, 2, 4, 1, 2, 3}
+		m := utils.M{}
+		result := m.Dupes(numberList)
+
+		c.JSON(http.StatusOK, gin.H{
+			"duplicates": result,
+		})
+	})
 
 	r.POST("/concat", func(c *gin.Context) {
 		req := c.Request
@@ -74,5 +108,4 @@ func main() {
 	})
 
 	r.Run(fmt.Sprintf(":%s", port))
-
 }
