@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/rexposadas/bcd/utils"
 	"io"
 	"net/http"
 	"os"
 	"strconv"
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -22,11 +22,9 @@ func main() {
 
 	r := gin.Default()
 
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"success": true,
-		})
-	})
+	// todo: add an endpoint for sub.
+
+	// todo: create an endpont for Dupes method.
 
 	r.POST("/concat", func(c *gin.Context) {
 		req := c.Request
@@ -52,29 +50,29 @@ func main() {
 			"result": result,
 		})
 	})
- 
+
 	r.POST("/add", func(c *gin.Context) {
 		req := c.Request
 		b, err := io.ReadAll(req.Body)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
-	}
-	payload := struct {
-		Data []int `json:"data"`
-	}{}
-	if err := json.Unmarshal(b, &payload); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-}
-	m := utils.M{}
-	result := m.Add(payload.Data)
+		}
+		payload := struct {
+			Data []int `json:"data"`
+		}{}
+		if err := json.Unmarshal(b, &payload); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		m := utils.M{}
+		result := m.Add(payload.Data)
 
-	c.JSON(http.StatusOK, gin.H{
-		"result": result,
+		c.JSON(http.StatusOK, gin.H{
+			"result": result,
+		})
 	})
-})
 
-r.Run(fmt.Sprintf(":%s", port))
+	r.Run(fmt.Sprintf(":%s", port))
 
 }

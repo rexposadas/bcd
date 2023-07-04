@@ -21,3 +21,15 @@ func (m M) Add(list []int) int {
 	}
 	return sum
 }
+
+func (m M) Sub(x, y int) int {
+	return x - y
+}
+
+// todo: implement
+//
+// test 1: 1,2,4,1,2,3
+// output: 1,2
+func (m M) Dupes(list []int) []int {
+	return []int{}
+}
