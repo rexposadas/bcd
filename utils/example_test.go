@@ -23,6 +23,11 @@ func TestSub(t *testing.T) {
 	assert.Equal(t, 2, result)
 }
 
+func TestDupes(t*testing.T) {
+	m := M{}
+	result := m.Dupes([]int{1, 2, 3, 1, 2})
+	assert.Equal(t, []int{1, 2,}, result)
+}
 // todo: add test for Concat
 
 func TestConcat(t *testing.T) {
