@@ -51,12 +51,24 @@ func main() {
 	// todo: create an endpont for Dupes method.
 
 	r.POST("/dupes", func(c *gin.Context) {
-		numberList := []int{1, 2, 4, 1, 2, 3}
+		req := c.Request
+		b, err := io.ReadAll(req.Body)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		payload := struct {
+			Data []int `json:"data"`
+		}{}
+		if err := json.Unmarshal(b, &payload); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		m := utils.M{}
-		result := m.Dupes(numberList)
+		result := m.Dupes(payload.Data)
 
 		c.JSON(http.StatusOK, gin.H{
-			"duplicates": result,
+			"result": result,
 		})
 	})
 
