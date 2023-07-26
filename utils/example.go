@@ -1,7 +1,6 @@
 package utils
 
-type M struct {
-}
+type M struct{}
 
 func (m M) Concat(strings []string) string {
 	concatenated := ""
@@ -20,4 +19,28 @@ func (m M) Add(list []int) int {
 		sum += number
 	}
 	return sum
+}
+
+func (m M) Sub(x, y int) int {
+	return x - y
+}
+
+// todo: implement
+//
+// test 1: 1,2,4,1,2,3
+// output: 1,2
+
+func (m M) Dupes(list []int) []int {
+	seen := make(map[int]bool)
+	duplicates := []int{}
+
+	for _, num := range list {
+		if seen[num] {
+			duplicates = append(duplicates, num)
+		} else {
+			seen[num] = true
+		}
+	}
+
+	return duplicates
 }
